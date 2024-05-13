@@ -5,6 +5,7 @@ import { useEffect } from "react";
 const WeatherIcon = () => {
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
+  const [weatherData, setWeatherData] = useState();
 
   const getWeather = async () => {
     try {
@@ -15,6 +16,8 @@ const WeatherIcon = () => {
       );
 
       console.log(response);
+
+      setWeatherData(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -33,7 +36,23 @@ const WeatherIcon = () => {
     getWeather();
   }, [latitude]);
 
-  return <div>WeatherIcon</div>;
+  if (!weatherData)
+    return <div className="w-[128px] h-12 flex items-center">loading...</div>;
+
+  return (
+    <div className="text-xs flex items-center">
+      <img
+        className="w-12 h-12"
+        src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+      />
+      <div className="w-20">
+        <div className="font-bold">{weatherData?.name}</div>
+        <div className="font-semibold">
+          {weatherData?.main.temp.toFixed(1)}℃
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default WeatherIcon;
