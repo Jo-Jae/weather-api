@@ -37,7 +37,11 @@ const WeatherIcon = () => {
   }, [latitude]);
 
   if (!weatherData)
-    return <div className="w-[128px] h-12 flex items-center">loading...</div>;
+    return (
+      <div className="w-[128px] h-12 font-semibold flex items-center">
+        Loading...
+      </div>
+    );
 
   return (
     <div className="text-xs flex items-center">
